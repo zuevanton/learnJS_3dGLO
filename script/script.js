@@ -24,9 +24,7 @@ window.addEventListener('DOMContentLoaded', function () {
         timerMinutes.textContent = timer.minutes.toString().length === 1 ? '0' + timer.minutes : timer.minutes;
         timerSeconds.textContent = timer.seconds.toString().length === 1 ? '0' + timer.seconds : timer.seconds;
       } else {
-        timerHours.textContent = '00';
-        timerMinutes.textContent = '00';
-        timerSeconds.textContent = '00';
+        return countTimer(new Date(deadline).getTime() + 86400000);
       }
     }
     updateClock();
