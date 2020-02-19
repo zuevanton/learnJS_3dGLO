@@ -115,6 +115,28 @@ window.addEventListener('DOMContentLoaded', function () {
 
   }
 
+  // плавные якорные ссылки
+  function slowAnchorLink() {
+    const links = document.querySelectorAll('menu>ul>li>a, main>a img');
+
+    links.forEach(item => {
+      item.addEventListener('click', function (e) {
+        let id = e.target.hash !== undefined ? e.target.hash.slice(1) : e.target.parentNode.hash.slice(1);
+        let elemIndent = document.getElementById(id).getBoundingClientRect().top;
+        e.preventDefault();
+        animate({
+          duration: 800,
+          timing(timeFraction) {
+            return timeFraction;
+          },
+          draw(progress) {
+            window.scroll(0, progress * elemIndent);
+          }
+        });
+      });
+    });
+  }
+  slowAnchorLink();
 
 
 
