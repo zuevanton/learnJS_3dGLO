@@ -34,18 +34,16 @@ window.addEventListener('DOMContentLoaded', function () {
 
   // меню
   const toggleMenu = () => {
-    const btnMenu = document.querySelector('.menu'),
-          menu = document.querySelector('menu'),
-          closeBtn = document.querySelector('.close-btn'),
-          menuItems = menu.querySelectorAll('ul>li');
+    const menu = document.querySelector('menu');
     const handlerMenu = () => {
       menu.classList.toggle('active-menu');
     };
-    btnMenu.addEventListener('click', handlerMenu);
-    menu.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
       let target = e.target;
-      if(target.parentNode.nodeName === 'LI' || target.classList.contains('close-btn')){
+      if(target.hash || target.parentNode.classList.contains('menu') || target.classList.contains('menu')){
         handlerMenu();
+      } else if(!target.closest('menu') && menu.classList.contains('active-menu')){
+        menu.classList.remove('active-menu');
       }
     });
   };
