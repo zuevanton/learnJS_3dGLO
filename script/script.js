@@ -56,7 +56,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     popupBtn.forEach((elem) => {
       elem.addEventListener('click', () => {
-        if(document.documentElement.clientWidth > 768) {
+        if(screen.width > 768) {
           popup.style.display = 'block';
           animate({
             duration: 600,
@@ -74,7 +74,7 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 
     popupClose.addEventListener('click', () =>{
-      if(document.documentElement.clientWidth > 768) {
+      if(screen.width > 768) {
         animate({
           duration: 300,
           timing(timeFraction) {
@@ -115,24 +115,47 @@ window.addEventListener('DOMContentLoaded', function () {
 
   }
 
-  // плавные якорные ссылки
+  // плавные якорные ссылки (велосипед)
+  // function slowAnchorLink() {
+  //   const links = document.querySelectorAll('menu>ul>li>a, main>a img');
+  //
+  //   links.forEach(item => {
+  //     item.addEventListener('click', function (e) {
+  //       let id = e.target.hash !== undefined ? e.target.hash.slice(1) : e.target.parentNode.hash.slice(1);
+  //       let elemIndent = document.getElementById(id).offsetTop,
+  //           windowIndent = window.pageYOffset,
+  //           test = elemIndent - windowIndent;
+  //       console.log('elem ', elemIndent);
+  //       console.log('window ', windowIndent);
+  //       console.log('dest ', test);
+  //       console.log('  ');
+  //       e.preventDefault();
+  //       animate({
+  //         duration: 800,
+  //         timing(timeFraction) {
+  //           return timeFraction;
+  //         },
+  //         draw(progress) {
+  //           window.scrollTo(0, progress * elemIndent);
+  //         }
+  //       });
+  //     });
+  //   });
+  // }
+
   function slowAnchorLink() {
     const links = document.querySelectorAll('menu>ul>li>a, main>a img');
 
     links.forEach(item => {
-      item.addEventListener('click', function (e) {
-        let id = e.target.hash !== undefined ? e.target.hash.slice(1) : e.target.parentNode.hash.slice(1);
-        let elemIndent = document.getElementById(id).getBoundingClientRect().top;
+      item.addEventListener('click', e =>{
+        const id = e.target.hash !== undefined ? e.target.hash.slice(1) : e.target.parentNode.hash.slice(1),
+              elem = document.getElementById(id);
         e.preventDefault();
-        animate({
-          duration: 800,
-          timing(timeFraction) {
-            return timeFraction;
-          },
-          draw(progress) {
-            window.scroll(0, progress * elemIndent);
-          }
+        elem.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
         });
+
       });
     });
   }
