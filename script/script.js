@@ -270,6 +270,39 @@ window.addEventListener('DOMContentLoaded', function () {
   };
   slider();
 
+  // changing command photo's
+  const changeCommandPhoto = () => {
+    const commandContainer = document.getElementById('command');
+    let srcTemp = '';
+    commandContainer.addEventListener('mouseover', (e) => {
+      let target = e.target;
+      if(!target.matches('.command__photo')){
+        return;
+      }
+      srcTemp = target.src;
+      target.src = target.dataset.img;
+    });
 
+    commandContainer.addEventListener('mouseout', (e) => {
+      let target = e.target;
+      if(!target.matches('.command__photo')){
+        return;
+      }
+      target.src = srcTemp;
+    });
+  };
+  changeCommandPhoto();
+
+  // validate calculator inputs type number
+  const validateInputsTypeNumber = () => {
+    const calc = document.getElementById('calc');
+    calc.addEventListener('input', (e) => {
+      let target = e.target;
+      if(!target.matches('input[type="number"')){
+        return
+      }
+      target.value = target.value.replace(/\D/g, '');
+    });
+  };
+  validateInputsTypeNumber();
 });
-
