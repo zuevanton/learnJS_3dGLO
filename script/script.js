@@ -338,8 +338,6 @@ window.addEventListener('DOMContentLoaded', function () {
         totalTemp = total;
       }
 
-      // totalValue.textContent = total;
-      // animateNumbers('total', 0, total);
     };
 
     calcBlock.addEventListener('change', (e) => {
@@ -375,28 +373,5 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     step();
   };
-  // const animateNumbers = (id, start, end, duration = 2500) => {
-  //   let animateId = requestAnimationFrame(animateNumbers);
-  //   let test = document.getElementById(id),
-  //     range = end - start,
-  //     minTimer = 50,
-  //     stepTime = Math.abs(Math.floor(duration - range));
-  //
-  //   stepTime = Math.max(stepTime, minTimer);
-  //   let startTime = new Date().getTime(),
-  //     endTime = startTime + duration;
-  //
-  //
-  //   let now = new Date().getTime(),
-  //     remaining = Math.max((endTime - now) / duration, 0),
-  //     value = Math.round(end - (remaining * range));
-  //
-  //   document.getElementById('total').textContent = value;
-  //   console.log(end);
-  //   if(value === end || isNaN(value)) {
-  //     cancelAnimationFrame(animateId);
-  //   } else {
-  //     requestAnimationFrame(animateNumbers);
-  //   }
-  // };
+
 });
