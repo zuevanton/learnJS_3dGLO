@@ -334,7 +334,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
       if(typeValue && squareValue){
         total = price * typeValue * squareValue * countValue * dayValue;
-        animateNumbers(totalTemp, total);
+        animateNumbers(totalTemp, total, totalValue);
         totalTemp = total;
       }
 
@@ -350,10 +350,8 @@ window.addEventListener('DOMContentLoaded', function () {
   };
   calc();
 
-  const animateNumbers = (start, end, duration = 1200) => {
-    let animateId = requestAnimationFrame(animateNumbers),
-        target = document.getElementById('total'),
-        range = end - start,
+  const animateNumbers = (start, end, element, duration = 1200) => {
+    let range = end - start,
         startTime = new Date().getTime(),
         endTime = startTime + duration;
 
@@ -363,11 +361,9 @@ window.addEventListener('DOMContentLoaded', function () {
           remaining = Math.max((endTime - now) / duration, 0),
           value = Math.round(end - (remaining * range));
 
-      target.textContent = value;
+      element.textContent = value;
 
-      if(value === end || isNaN(value)) {
-        cancelAnimationFrame(animateId);
-      } else {
+      if(value !== end || !isNaN(value)) {
         requestAnimationFrame(step);
       }
     };
