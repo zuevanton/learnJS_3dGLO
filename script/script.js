@@ -295,7 +295,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   // validate calculator inputs type number
   const validateInputsTypeNumber = () => {
-    const calc = document.getElementById('calc');
+    const calc = document.querySelector('.calc-block');
     calc.addEventListener('input', (e) => {
       let target = e.target;
       if(!target.matches('input[type="number"')){
@@ -305,4 +305,98 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   };
   validateInputsTypeNumber();
+
+  // calculator
+  const calc = (price = 100) => {
+    const calcBlock = document.querySelector('.calc-block'),
+          calcType = document.querySelector('.calc-type'),
+          calcSquare = document.querySelector('.calc-square'),
+          calcDay = document.querySelector('.calc-day'),
+          calcCount = document.querySelector('.calc-count'),
+          totalValue = document.getElementById('total');
+    let totalTemp = 0;
+    const countSum = () => {
+      let total = 0,
+          countValue = 1,
+          dayValue = 1;
+      const typeValue = calcType.options[calcType.selectedIndex].value,
+            squareValue = +calcSquare.value;
+
+      if(calcCount.value > 1){
+        countValue += (calcCount.value - 1)/ 10;
+      }
+
+      if(calcDay.value && calcDay.value < 5) {
+        dayValue *= 2
+      } else if (calcDay.value && calcDay.value < 10) {
+        dayValue *= 1.5;
+      }
+
+      if(typeValue && squareValue){
+        total = price * typeValue * squareValue * countValue * dayValue;
+        animateNumbers(totalTemp, total);
+        totalTemp = total;
+      }
+
+      // totalValue.textContent = total;
+      // animateNumbers('total', 0, total);
+    };
+
+    calcBlock.addEventListener('change', (e) => {
+      const target = e.target;
+
+      if(target === calcType || target === calcCount || target === calcSquare || target === calcDay) {
+        countSum();
+      }
+    });
+  };
+  calc();
+
+  const animateNumbers = (start, end, duration = 1200) => {
+    let animateId = requestAnimationFrame(animateNumbers),
+        target = document.getElementById('total'),
+        range = end - start,
+        startTime = new Date().getTime(),
+        endTime = startTime + duration;
+
+    const step = () => {
+
+      let now = new Date().getTime(),
+          remaining = Math.max((endTime - now) / duration, 0),
+          value = Math.round(end - (remaining * range));
+
+      target.textContent = value;
+
+      if(value === end || isNaN(value)) {
+        cancelAnimationFrame(animateId);
+      } else {
+        requestAnimationFrame(step);
+      }
+    };
+    step();
+  };
+  // const animateNumbers = (id, start, end, duration = 2500) => {
+  //   let animateId = requestAnimationFrame(animateNumbers);
+  //   let test = document.getElementById(id),
+  //     range = end - start,
+  //     minTimer = 50,
+  //     stepTime = Math.abs(Math.floor(duration - range));
+  //
+  //   stepTime = Math.max(stepTime, minTimer);
+  //   let startTime = new Date().getTime(),
+  //     endTime = startTime + duration;
+  //
+  //
+  //   let now = new Date().getTime(),
+  //     remaining = Math.max((endTime - now) / duration, 0),
+  //     value = Math.round(end - (remaining * range));
+  //
+  //   document.getElementById('total').textContent = value;
+  //   console.log(end);
+  //   if(value === end || isNaN(value)) {
+  //     cancelAnimationFrame(animateId);
+  //   } else {
+  //     requestAnimationFrame(animateNumbers);
+  //   }
+  // };
 });
