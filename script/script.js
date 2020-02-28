@@ -373,36 +373,21 @@ window.addEventListener('DOMContentLoaded', function () {
   // send ajax-form
   const sendForm = () => {
     const errorMsg = 'что то пошло не так',
-          loadMsg = 'Загрузка',
+          loadMsg = '',
           successMsg = 'Спасибо! мы скоро с вами свяжемся';
 
-    const form = document.getElementById('form1');
     const statusMsg = document.createElement('div');
     statusMsg.style.cssText = 'font-size: 2rem; color: blue;';
-
-    // form.addEventListener('submit', (event) => {
-    //   event.preventDefault();
-    //   statusMsg.textContent = loadMsg;
-    //   form.appendChild(statusMsg);
-    //   const formData = new FormData(form);
-    //   let body = {};
-    //   for(let value of formData.entries()){
-    //     body[value[0]] = value[1];
-    //   }
-    //   postData(body, ()=> {
-    //     statusMsg.textContent = successMsg;
-    //   }, (error) => {
-    //     statusMsg.textContent = errorMsg;
-    //     console.error(error);
-    //   });
-    // });
 
     document.body.addEventListener('submit', e => {
       e.preventDefault();
       if(e.target.tagName.toLowerCase() !== 'form'){
         return;
       }
+      const loading = e.target.querySelector('.loading');
+      loading.style.display = 'block';
       statusMsg.textContent = loadMsg;
+
       e.target.appendChild(statusMsg);
       const formData = new FormData(e.target);
       let body = {};
@@ -411,10 +396,11 @@ window.addEventListener('DOMContentLoaded', function () {
       }
       postData(body, ()=> {
         statusMsg.textContent = successMsg;
-
+          loading.style.display = '';
       }, (error) => {
         statusMsg.textContent = errorMsg;
         console.error(error);
+        loading.style.display = '';
       },
         () =>{
           e.target.querySelectorAll('input').forEach(input => input.value = '');
