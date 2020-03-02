@@ -394,8 +394,11 @@ window.addEventListener('DOMContentLoaded', function () {
       for(let value of formData.entries()){
         body[value[0]] = value[1];
       }
-      postData(body, './server.php')
-        .then(()=> {
+      postData(body)
+        .then((response)=> {
+          if(response.status !== 200){
+            throw new Error('status not 200');
+          }
           statusMsg.textContent = successMsg;
           loading.style.display = '';
           e.target.querySelectorAll('input').forEach(input => input.value = '');
@@ -408,22 +411,13 @@ window.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    const postData = (body, url) => {
-      return new Promise((resolve, reject) => {
-        const request = new XMLHttpRequest();
-        request.addEventListener('readystatechange', ()=> {
-          if(request.readyState !== 4){
-            return;
-          }
-          if(request.status === 200) {
-            resolve();
-          } else {
-            reject(request.status);
-          }
-        });
-        request.open('POST', url);
-        request.setRequestHeader('Content-Type', 'multipart/application/json');
-        request.send(JSON.stringify(body));
+    const postData = (body) => {
+      return fetch('./server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/application/json',
+        },
+        body: JSON.stringify(body),
       });
     };
 
