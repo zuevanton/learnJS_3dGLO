@@ -3,11 +3,14 @@ const validationInputsForm = () => {
   inputs.forEach(item => {
     item.addEventListener('input', e => {
       const input = e.target;
-      if(input.name === 'user_name' || input.name === 'user_message'){
+      if(input.name === 'user_name'){
         input.value = input.value.replace(/[^а-яё ]/i, '');
       }
       if(input.name === 'user_phone'){
         input.value = input.value.replace(/[^\+\d]/, '');
+      }
+      if(input.name === 'user_message'){
+        input.value = input.value.replace(/[a-z]/i, '');
       }
     });
   });

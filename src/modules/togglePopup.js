@@ -7,7 +7,7 @@ const togglePopup = () =>{
 
   popupBtn.forEach((elem) => {
     elem.addEventListener('click', () => {
-      if(screen.width > 768) {
+      if(document.documentElement.clientWidth > 768) {
         popup.style.display = 'block';
         animate({
           duration: 600,
@@ -25,7 +25,7 @@ const togglePopup = () =>{
     popup.addEventListener('click', (e)=>{
       let target = e.target;
       if(target.classList.contains('popup-close')){
-        if(screen.width > 768) {
+        if(document.documentElement.clientWidth > 768) {
           animate({
             duration: 300,
             timing(timeFraction) {
