@@ -21,6 +21,7 @@ import validateInputsTypeNumber from './modules/validateInputsTypeNumber';
 import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 import validationInputsForm from './modules/validationInputsForm';
+import sliderCarousel from "./modules/sliderCarusel";
 window.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
@@ -53,7 +54,27 @@ window.addEventListener('DOMContentLoaded', function () {
 
   // send ajax-form
   sendForm();
-
   // валидация элементов формы
   validationInputsForm();
+
+  // carousel slider bonus
+  const sliderNew = new sliderCarousel({
+    main: '.companies-wrapper',
+    wrap: '.companies-hor',
+    prev: '.arrow-left',
+    next: '.arrow-right',
+    responsive: [{
+        breakpoint: 1024,
+        slideToShow: 3
+      },
+      {
+        breakpoint: 768,
+        slideToShow: 2
+      },
+      {
+        breakpoint: 576,
+        slideToShow: 1
+      }]
+  });
+  sliderNew.init();
 });
